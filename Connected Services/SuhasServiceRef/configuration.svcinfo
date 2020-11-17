@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configurationSnapshot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:schemas-microsoft-com:xml-wcfconfigurationsnapshot">
+  <behaviors />
+  <bindings>
+    <binding digest="System.ServiceModel.Configuration.BasicHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;soapService&quot; /&gt;" bindingType="basicHttpBinding" name="soapService" />
+    <binding digest="System.ServiceModel.Configuration.WSHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;metadata&quot;&gt;&lt;security mode=&quot;None&quot; /&gt;&lt;/Data&gt;" bindingType="wsHttpBinding" name="metadata" />
+  </bindings>
+  <endpoints>
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://webstrar74.fulton.asu.edu/Page10/Service1.svc/soap&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;soapService&quot; contract=&quot;SuhasServiceRef.IService1&quot; name=&quot;soapService&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://webstrar74.fulton.asu.edu/Page10/Service1.svc/soap&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;soapService&quot; contract=&quot;SuhasServiceRef.IService1&quot; name=&quot;soapService&quot; /&gt;" contractName="SuhasServiceRef.IService1" name="soapService" />
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://webstrar74.fulton.asu.edu/Page10/Service1.svc/mex&quot; binding=&quot;wsHttpBinding&quot; bindingConfiguration=&quot;metadata&quot; contract=&quot;SuhasServiceRef.IService1&quot; name=&quot;metadata&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://webstrar74.fulton.asu.edu/Page10/Service1.svc/mex&quot; binding=&quot;wsHttpBinding&quot; bindingConfiguration=&quot;metadata&quot; contract=&quot;SuhasServiceRef.IService1&quot; name=&quot;metadata&quot; /&gt;" contractName="SuhasServiceRef.IService1" name="metadata" />
+  </endpoints>
+</configurationSnapshot>
