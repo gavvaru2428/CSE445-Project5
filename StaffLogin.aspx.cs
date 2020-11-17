@@ -18,14 +18,30 @@ namespace project5
 
         protected void btnStaffLogin_Click(object sender, EventArgs e)
         {
+
             lblErrorLogin.Visible = false;
 
             string filepath = HttpRuntime.AppDomainAppPath + @"\App_Data\Staff.xml";
             string user = txtNameStaff.Text;
-
             string password = txtPassStaff.Text;
+            string captcha = imgVerBox.Text.ToLower();
 
-            
+            if (String.IsNullOrEmpty(user) || String.IsNullOrEmpty(password))
+            {
+                lblErrorLogin.Text = "Please enter username and password!";
+                lblErrorLogin.Visible = true;
+                return;
+
+            }
+
+            if (captcha != Session["CaptchaVerify"].ToString())
+            {
+                lblErrorLogin.Text = "Please enter correcct verification captcha code!";
+                lblErrorLogin.Visible = true;
+                return;
+            }
+
+
             XmlDocument myDoc = new XmlDocument();
             myDoc.Load(filepath);    // open file
             XmlElement rootElement = myDoc.DocumentElement;
@@ -33,8 +49,6 @@ namespace project5
             {
                 if (node["name"].InnerText == user)
                 {
-                   
-
                     if (node["pwd"].InnerText == password)
                     {
                         if (Request.QueryString["ReturnUrl"] != null)
@@ -43,16 +57,14 @@ namespace project5
                         }
                         else
                         {
-                            FormsAuthentication.SetAuthCookie(txtNameStaff.Text, false);
+                            //FormsAuthentication.SetAuthCookie(txtNameStaff.Text, false);
+                            SignIn(user, false);
                             Response.Redirect("Staff/Staff.aspx");
                         }
-
-
 
                     }
                     else
                     {
-                        //if username exists but password does match. 
                         lblErrorLogin.Text = "Please enter correct password";
                         lblErrorLogin.Visible = true;
                         return;
@@ -63,5 +75,42 @@ namespace project5
             lblErrorLogin.Visible = true;
             return;
         }
+        private void SignIn(string username, bool createPersistentCookie)
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            TimeSpan expirationTimeSpan = FormsAuthentication.Timeout;
+
+            var ticket = new FormsAuthenticationTicket(
+                1,
+                username,
+                now,
+                now.Add(expirationTimeSpan),
+                createPersistentCookie,
+                "Staff",
+                FormsAuthentication.FormsCookiePath);
+
+            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName,
+                encryptedTicket)
+            {
+                HttpOnly = true,
+                Secure = FormsAuthentication.RequireSSL,
+                Path = FormsAuthentication.FormsCookiePath
+            };
+
+            if (ticket.IsPersistent)
+            {
+                cookie.Expires = ticket.Expiration;
+            }
+            if (FormsAuthentication.CookieDomain != null)
+            {
+                cookie.Domain = FormsAuthentication.CookieDomain;
+            }
+
+            Response.Cookies.Add(cookie);
+        }
+
+
     }
 }

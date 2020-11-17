@@ -14,6 +14,7 @@ namespace project5
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var a  = Request.QueryString["ReturnUrl"];
             if (!String.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
             {
                 if (Request.QueryString["ReturnUrl"].Contains("Staff"))
@@ -38,6 +39,14 @@ namespace project5
 
             string password = txtMemPass.Text;
 
+            if(String.IsNullOrEmpty(user) || String.IsNullOrEmpty(password))
+            {
+                lblErrorLogin.Text = "Please enter username and password!";
+                lblErrorLogin.Visible = true;
+                return;
+
+            }
+
             DllClass dllClass = new DllClass();
 
             string decryptPass = "";
@@ -58,7 +67,8 @@ namespace project5
                         }
                         else
                         {
-                            FormsAuthentication.SetAuthCookie(txtMemName.Text, false);
+                            //FormsAuthentication.SetAuthCookie(txtMemName.Text, false);
+                            SignIn(user, false);
                             Response.Redirect("Members/Member.aspx");
                         }
 
@@ -78,8 +88,42 @@ namespace project5
             lblErrorLogin.Visible = true; 
             return;
 
-
-
         }
+        private void SignIn(string username, bool createPersistentCookie)
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            TimeSpan expirationTimeSpan = FormsAuthentication.Timeout;
+
+            var ticket = new FormsAuthenticationTicket(
+                1,
+                username,
+                now,
+                now.Add(expirationTimeSpan),
+                createPersistentCookie,
+                "Member",
+                FormsAuthentication.FormsCookiePath);
+
+            var encryptedTicket = FormsAuthentication.Encrypt(ticket);
+
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName,
+                encryptedTicket)
+            {
+                HttpOnly = true,
+                Secure = FormsAuthentication.RequireSSL,
+                Path = FormsAuthentication.FormsCookiePath
+            };
+
+            if (ticket.IsPersistent)
+            {
+                cookie.Expires = ticket.Expiration;
+            }
+            if (FormsAuthentication.CookieDomain != null)
+            {
+                cookie.Domain = FormsAuthentication.CookieDomain;
+            }
+
+            Response.Cookies.Add(cookie);
+        }
+
     }
 }

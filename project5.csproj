@@ -72,7 +72,9 @@
   <ItemGroup>
     <Content Include="App_Data\Members.xml" />
     <Content Include="App_Data\Staff.xml" />
+    <Content Include="Captcha.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="MemberLogin.aspx" />
     <Content Include="MemberRegister.aspx" />
     <Content Include="Members\Member.aspx" />
@@ -81,12 +83,22 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Captcha.aspx.cs">
+      <DependentUpon>Captcha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Captcha.aspx.designer.cs">
+      <DependentUpon>Captcha.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MemberLogin.aspx.cs">
       <DependentUpon>MemberLogin.aspx</DependentUpon>
